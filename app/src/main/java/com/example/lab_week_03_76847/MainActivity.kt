@@ -7,7 +7,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.util.Log
 
-class MainActivity : AppCompatActivity() {
+interface CoffeeListener {
+    fun onSelected(id: Int)
+}
+
+class MainActivity : AppCompatActivity(), CoffeeListener{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -19,8 +23,14 @@ class MainActivity : AppCompatActivity() {
                 systemBars.bottom)
             insets
         }
-        Log.d(TAG, "onCreate")
     }
+    override fun onSelected(id: Int){
+        val detailFragment = supportFragmentManager
+            .findFragmentById(R.id.fragment_detail)
+                as DetailFragment
+        detailFragment.setCoffeeData(id)
+    }
+
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart")
